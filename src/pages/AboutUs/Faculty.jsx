@@ -4,17 +4,17 @@ import { Facebook, MessageCircle, Instagram } from "lucide-react";
 const facultyData = [
     {
         name: "Dr. Rakesh Patra",
-        role: "Principal",
+        designation: "Principal",
         img: "https://images.unsplash.com/photo-1603415526960-f7e0328cfbc1",
     },
     {
         name: "Prof. Sweta Mishra",
-        role: "HOD – Computer Science",
+        designation: "HOD – Computer Science",
         img: "https://images.unsplash.com/photo-1544005313-94ddf0286df2",
     },
     {
         name: "Prof. Deepak Sahu",
-        role: "English Faculty",
+        designation: "English Faculty",
         img: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
     },
 ];
@@ -44,7 +44,7 @@ const Faculty = () => {
                         />
 
                         <h3 className="text-xl font-bold text-gray-900">{faculty.name}</h3>
-                        <p className="text-gray-700 font-medium mb-4">{faculty.role}</p>
+                        <p className="text-gray-700 font-medium mb-4">{faculty.designation}</p>
 
                         {/* Social Icons */}
                         <div className="flex justify-center gap-4 mt-4">
