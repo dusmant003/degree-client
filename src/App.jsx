@@ -7,6 +7,8 @@ import ContactUs from './pages/ContactUs/ContactUs'
 import Gallery from './pages/Gallery/Gallery'
 import EventsSection from './components/layOut/Event'
 import Events from './pages/Events/Events'
+import AdminLayout from './components/AdminLayout/AdminLayOut'
+import DashBoard from './pages/Admin/DashBoard/DashBoard'
 
 
 const App = () => {
@@ -23,13 +25,13 @@ const App = () => {
         </Route>
 
         {/* Admin Panel Routes under AdminLayout */}
-        {/* <Route path="/adminportal" element={<AdminLayout />}>
-          <Route index element={<Dashboard />} />
-          <Route path="menu/add" element={<AddMenu />} />
+        <Route path="/adminportal" element={<AdminLayout />}>
+          <Route index element={<DashBoard />} />
+          {/* <Route path="menu/add" element={<AddMenu />} />
           <Route path="menu/list" element={<MenuuList />} />
           <Route path="menu/category" element={<Categories />} />
-          <Route path='gallery/manage' element={<ManageGallery />} />
-        </Route> */}
+          <Route path='gallery/manage' element={<ManageGallery />} /> */}
+        </Route>
       </Routes>
     </>
   )
