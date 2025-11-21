@@ -11,12 +11,10 @@ import {
     ChevronDown
 } from "lucide-react";
 
-
 const AdminSidebar = () => {
     const location = useLocation();
     const [openDropdown, setOpenDropdown] = useState(null);
 
-    // ✅ Sidebar Menu Config (paths now match /adminportal routes)
     const menuItems = [
         {
             title: "Dashboard",
@@ -27,35 +25,35 @@ const AdminSidebar = () => {
             title: "Manage Staff",
             icon: Users,
             children: [
-                { name: "Manage Staff", path: "/adminportal/manage/staff" },
+                { name: "Manage Staff", path: "manage/staff" },
             ],
         },
         {
             title: "Manage Events",
             icon: CalendarClock,
             children: [
-                { name: "All Orders", path: "/adminportal/manage/events" },
+                { name: "Manage Events", path: "manage/events" },
             ],
         },
         {
             title: "Manage Gallery",
             icon: Upload,
             children: [
-                { name: "manage Gallery", path: "/adminportal/manage/gallery" },
+                { name: "manage Gallery", path: "manage/gallery" },
             ]
         },
         {
             title: "Notifications",
             icon: Bell,
             children: [
-                { name: "Create", path: "/adminportal/manage/notifications" },
+                { name: "Notifications", path: "manage/notifications" },
             ],
         },
         {
             title: "Settings",
             icon: Settings,
             children: [
-                { name: "Profile", path: "/adminportal/settings/profile" },
+                { name: "Profile", path: "settings/profile" },
             ],
         },
     ];
@@ -80,45 +78,61 @@ const AdminSidebar = () => {
 
                     return (
                         <div key={i}>
-                            {/* 🔹 Main menu button */}
-                            <button
-                                onClick={() =>
-                                    item.children ? toggleDropdown(item.title) : null
-                                }
-                                className={`flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 ${isActive ? "bg-gray-800" : ""
-                                    }`}
-                            >
-                                <div className="flex items-center gap-2">
-                                    <Icon size={18} />
-                                    <span>{item.title}</span>
-                                </div>
-                                {item.children && (
-                                    <span>
-                                        {isOpen ? (
-                                            <ChevronDown size={18} />
-                                        ) : (
-                                            <ChevronRight size={18} />
-                                        )}
-                                    </span>
-                                )}
-                            </button>
 
-                            {/* 🔻 Dropdown items */}
-                            {item.children && isOpen && (
-                                <div className="ml-6 mt-1 space-y-1">
-                                    {item.children.map((child, idx) => (
-                                        <Link
-                                            key={idx}
-                                            to={child.path}
-                                            className={`block p-2 rounded-lg text-sm hover:bg-gray-800 ${location.pathname === child.path
-                                                ? "bg-gray-800 text-white"
-                                                : "text-gray-300"
-                                                }`}
-                                        >
-                                            {child.name}
-                                        </Link>
-                                    ))}
-                                </div>
+                            {/* ✅ Dashboard (no children → use Link) */}
+                            {!item.children ? (
+                                <Link
+                                    to={item.path}
+                                    className={`flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 ${
+                                        isActive ? "bg-gray-800" : ""
+                                    }`}
+                                >
+                                    <div className="flex items-center gap-2">
+                                        <Icon size={18} />
+                                        <span>{item.title}</span>
+                                    </div>
+                                </Link>
+                            ) : (
+                                <>
+                                    {/* 🔹 Dropdown Parent Button */}
+                                    <button
+                                        onClick={() => toggleDropdown(item.title)}
+                                        className={`flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 ${
+                                            isActive ? "bg-gray-800" : ""
+                                        }`}
+                                    >
+                                        <div className="flex items-center gap-2">
+                                            <Icon size={18} />
+                                            <span>{item.title}</span>
+                                        </div>
+                                        <span>
+                                            {isOpen ? (
+                                                <ChevronDown size={18} />
+                                            ) : (
+                                                <ChevronRight size={18} />
+                                            )}
+                                        </span>
+                                    </button>
+
+                                    {/* 🔻 Dropdown Children */}
+                                    {isOpen && (
+                                        <div className="ml-6 mt-1 space-y-1">
+                                            {item.children.map((child, idx) => (
+                                                <Link
+                                                    key={idx}
+                                                    to={child.path}
+                                                    className={`block p-2 rounded-lg text-sm hover:bg-gray-800 ${
+                                                        location.pathname === child.path
+                                                            ? "bg-gray-800 text-white"
+                                                            : "text-gray-300"
+                                                    }`}
+                                                >
+                                                    {child.name}
+                                                </Link>
+                                            ))}
+                                        </div>
+                                    )}
+                                </>
                             )}
                         </div>
                     );
@@ -126,7 +140,7 @@ const AdminSidebar = () => {
             </nav>
 
             <div className="mt-auto text-center text-xs text-gray-500">
-                © 2025 The Local Adda
+                © 2025 Degree College
             </div>
         </aside>
     );
