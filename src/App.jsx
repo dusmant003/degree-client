@@ -13,6 +13,7 @@ import ManageEvents from './pages/Admin/Event/ManageEvents'
 import ManageGallery from './pages/Admin/Gallery/ManageGallery'
 import ManageNotifications from './pages/Admin/Notification/ManageNotifications'
 import Profile from './pages/Admin/Setting/Profile'
+import ManageMessages from './pages/Admin/Messages/ManageMessages'
 
 
 const App = () => {
@@ -35,6 +36,7 @@ const App = () => {
           <Route path='manage/events' element={<ManageEvents />} />
           <Route path='manage/gallery' element={<ManageGallery />} />
           <Route path='manage/notifications' element={<ManageNotifications />} />
+          <Route path='manage/messages' element={<ManageMessages />} />
           <Route path='settings/profile' element={<Profile />} />
         </Route>
       </Routes>

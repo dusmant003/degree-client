@@ -8,7 +8,8 @@ import {
     Bell,
     Settings,
     ChevronRight,
-    ChevronDown
+    ChevronDown,
+    Inbox
 } from "lucide-react";
 
 const AdminSidebar = () => {
@@ -50,6 +51,13 @@ const AdminSidebar = () => {
             ],
         },
         {
+            title: "Manage Messages",
+            icon: Inbox,
+            children: [
+                { name: "Manage Messages", path: "manage/messages" },
+            ],
+        },
+        {
             title: "Settings",
             icon: Settings,
             children: [
@@ -65,7 +73,7 @@ const AdminSidebar = () => {
     return (
         <aside className="w-64 bg-gray-900 text-gray-100 h-screen p-4 flex flex-col">
             <div className="text-2xl font-bold text-center mb-6">
-               Degree College
+                Degree College
             </div>
 
             <nav className="flex-1 space-y-1">
@@ -83,9 +91,8 @@ const AdminSidebar = () => {
                             {!item.children ? (
                                 <Link
                                     to={item.path}
-                                    className={`flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 ${
-                                        isActive ? "bg-gray-800" : ""
-                                    }`}
+                                    className={`flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 ${isActive ? "bg-gray-800" : ""
+                                        }`}
                                 >
                                     <div className="flex items-center gap-2">
                                         <Icon size={18} />
@@ -97,9 +104,8 @@ const AdminSidebar = () => {
                                     {/* 🔹 Dropdown Parent Button */}
                                     <button
                                         onClick={() => toggleDropdown(item.title)}
-                                        className={`flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 ${
-                                            isActive ? "bg-gray-800" : ""
-                                        }`}
+                                        className={`flex items-center justify-between w-full p-2 rounded-lg hover:bg-gray-800 ${isActive ? "bg-gray-800" : ""
+                                            }`}
                                     >
                                         <div className="flex items-center gap-2">
                                             <Icon size={18} />
@@ -121,11 +127,10 @@ const AdminSidebar = () => {
                                                 <Link
                                                     key={idx}
                                                     to={child.path}
-                                                    className={`block p-2 rounded-lg text-sm hover:bg-gray-800 ${
-                                                        location.pathname === child.path
+                                                    className={`block p-2 rounded-lg text-sm hover:bg-gray-800 ${location.pathname === child.path
                                                             ? "bg-gray-800 text-white"
                                                             : "text-gray-300"
-                                                    }`}
+                                                        }`}
                                                 >
                                                     {child.name}
                                                 </Link>
