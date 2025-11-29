@@ -1,66 +1,72 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
+import { Bell } from "lucide-react";
 
 export default function NewsNotification() {
-  const scrollRef = useRef(null);
 
-  useEffect(() => {
-    const scrollContainer = scrollRef.current;
-    let scrollAmount = 0;
-
-    const scrollInterval = setInterval(() => {
-      if (!scrollContainer) return;
-
-      scrollAmount += 1;
-      scrollContainer.scrollTop = scrollAmount;
-
-      if (scrollAmount >= scrollContainer.scrollHeight) {
-        scrollAmount = 0;
-      }
-    }, 30); // speed adjust
-
-    return () => clearInterval(scrollInterval);
-  }, []);
-
-  const notifications = [
-    "Admission open for 2025-26.",
-    "College annual fest starting from 12th March.",
-    "New sports complex inaugurated.",
-    "Mid-term exams scheduled from next week.",
-    "Scholarship application window closes soon.",
+  const newsList = [
+    {
+      id: 1,
+      title: "Campus Recruitment Drive",
+      description: "TCS will be visiting our campus for a placement drive. Students must register by 5 PM.",
+      date: "12 Feb 2025",
+      time: "10:30 AM"
+    },
+    {
+      id: 2,
+      title: "Holiday Announcement",
+      description: "The college will remain closed tomorrow due to maintenance work.",
+      date: "14 Feb 2025",
+      time: "09:00 AM"
+    }
+    ,
+    {
+      id: 2,
+      title: "Holiday Announcement",
+      description: "The college will remain closed tomorrow due to maintenance work.",
+      date: "14 Feb 2025",
+      time: "09:00 AM"
+    }
   ];
 
   return (
-    <section className="py-14 bg-gray-100">
-      <div className="max-w-6xl mx-auto px-5">
-        <h2 className="text-3xl font-extrabold text-gray-900 mb-2">News & Notifications</h2>
-        <p className="text-gray-600 mb-6">Latest updates from our college</p>
+    <div className="min-h-screen bg-gray-100 py-10 px-4">
 
-        {/* Notification Scroller */}
-        <div className="bg-white shadow-lg rounded-xl p-4 h-40 overflow-hidden relative border border-gray-200">
-          <div ref={scrollRef} className="h-full overflow-hidden space-y-4 py-2">
-            {notifications.map((note, index) => (
-              <a
-                key={index}
-                href="#" // replace with your route
-                className="block bg-gray-900 text-white px-4 py-3 rounded-lg shadow-md hover:bg-gray-800 duration-200"
-              >
-                {note}
-              </a>
-            ))}
+      <h1 className="text-3xl text-center font-serif font-extrabold mb-6 text-gray-800">
+        News & Notifications
+      </h1>
 
-            {/* Duplicate list for infinite loop */}
-            {notifications.map((note, index) => (
-              <a
-                key={`duplicate-${index}`}
-                href="#" // replace with your route
-                className="block bg-gray-900 text-white px-4 py-3 rounded-lg shadow-md hover:bg-gray-800 duration-200"
-              >
-                {note}
-              </a>
-            ))}
+      <div className="grid gap-6 max-w-3xl mx-auto">
+
+        {newsList.map((item) => (
+          <div
+            key={item.id}
+            className="bg-white shadow-md rounded-xl p-5 flex gap-4 border border-gray-200"
+          >
+            {/* Icon */}
+            <div className="w-12 h-12 bg-blue-100 rounded-full flex items-center justify-center">
+              <Bell className="text-blue-600" size={24} />
+            </div>
+
+            {/* Content */}
+            <div className="flex-1">
+              <h2 className="text-xl font-semibold text-gray-800">
+                {item.title}
+              </h2>
+
+              <p className="text-gray-600 mt-1">
+                {item.description}
+              </p>
+
+              {/* Date + Time */}
+              <div className="flex items-center gap-4 mt-3 text-sm text-gray-500">
+                <span>📅 {item.date}</span>
+                <span>⏰ {item.time}</span>
+              </div>
+            </div>
           </div>
-        </div>
+        ))}
+
       </div>
-    </section>
+    </div>
   );
 }

@@ -5,7 +5,7 @@ const facultyData = [
     {
         name: "Dr. Rakesh Patra",
         designation: "Principal",
-        img: "https://images.unsplash.com/photo-1603415526960-f7e0328cfbc1",
+        img: "https://images.unsplash.com/photo-1527980965255-d3b416303d12",
     },
     {
         name: "Prof. Sweta Mishra",
@@ -23,7 +23,7 @@ const Faculty = () => {
     return (
         <section className="w-full py-16 px-6 md:px-16 lg:px-24 bg-gray-100">
             <h2 className="text-3xl md:text-4xl font-extrabold text-center text-gray-900">
-                Our Faculty
+               Meet Our Faculty
             </h2>
             <p className="text-center text-gray-600 max-w-2xl mx-auto mt-2 mb-12">
                 Experienced, qualified, and inspiring — our faculty builds strong foundations.

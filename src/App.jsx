@@ -14,6 +14,10 @@ import ManageGallery from './pages/Admin/Gallery/ManageGallery'
 import ManageNotifications from './pages/Admin/Notification/ManageNotifications'
 import Profile from './pages/Admin/Setting/Profile'
 import ManageMessages from './pages/Admin/Messages/ManageMessages'
+import NewsAndNotification from './pages/NewsAndNotifications/NewsAndNotification'
+import FresherDay from './pages/Fresher/FresherDay'
+import WelComeDay from './pages/Welcome/WelComeDay'
+import AnnualDay from './pages/Annual/AnnualDay'
 
 
 const App = () => {
@@ -27,6 +31,11 @@ const App = () => {
           <Route path='/contactus' element={<ContactUs />} />
           <Route path='/Gallery' element={<Gallery />} />
           <Route path='/Events' element={<Events />} />
+          <Route path='/notifications' element={<NewsAndNotification />} />
+          <Route path='/fresherday' element={<FresherDay />} />
+          <Route path='/welcomeday' element={<WelComeDay />} />
+          <Route path='/annualday' element={<AnnualDay />} />
+
         </Route>
 
         {/* Admin Panel Routes under AdminLayout */}

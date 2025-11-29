@@ -14,7 +14,8 @@ export default function Navbar() {
     { name: "Aboutus", to: "/aboutus" },
     { name: "Gallery", to: "/gallery" },
     { name: "Events", to: "/events" },
-    { name: "Contactus", to: "/contactus" }, // corrected
+    { name: "Contactus", to: "/contactus" },
+    { name: "News&Notifications", to: "/notifications" },
   ];
 
   // Close menu on outside click
@@ -76,9 +77,8 @@ export default function Navbar() {
       {/* Mobile Dropdown */}
       <div
         ref={menuRef}
-        className={`md:hidden bg-white shadow-lg overflow-hidden transition-all duration-300 ${
-          open ? "max-h-96" : "max-h-0"
-        }`}
+        className={`md:hidden bg-white shadow-lg overflow-hidden transition-all duration-300 ${open ? "max-h-96" : "max-h-0"
+          }`}
       >
         <ul className="flex flex-col px-6 py-4 gap-4 text-gray-700 font-medium">
           {links.map((link, i) => (
