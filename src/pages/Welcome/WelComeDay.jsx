@@ -35,7 +35,7 @@ export default function WelComeDay() {
             {/* Hero Image */}
             <div className="rounded-2xl overflow-hidden shadow-lg mb-14" data-aos="zoom-in">
                 <img
-                    src="/images/welcomehero.jpg"
+                    src="https://cdn.pixabay.com/photo/2019/02/11/21/06/college-students-3990783_1280.jpg"
                     alt="Welcome Day"
                     className="w-full h-[380px] object-cover"
                 />
@@ -81,10 +81,10 @@ export default function WelComeDay() {
             <section data-aos="zoom-in" className="mb-10">
                 <h2 className="text-2xl font-bold mb-4">Welcome Day Gallery</h2>
                 <div className="grid grid-cols-2 md:grid-cols-4 gap-3">
-                    <img src="/images/w1.jpg" className="rounded-xl shadow-md h-40 object-cover" />
-                    <img src="/images/w2.jpg" className="rounded-xl shadow-md h-40 object-cover" />
-                    <img src="/images/w3.jpg" className="rounded-xl shadow-md h-40 object-cover" />
-                    <img src="/images/w4.jpg" className="rounded-xl shadow-md h-40 object-cover" />
+                    <img src="https://cdn.pixabay.com/photo/2019/02/11/21/06/college-students-3990783_1280.jpg" className="rounded-xl shadow-md h-40 object-cover" />
+                    <img src="https://cdn.pixabay.com/photo/2019/02/11/21/06/college-students-3990783_1280.jpg" className="rounded-xl shadow-md h-40 object-cover" />
+                    <img src="https://cdn.pixabay.com/photo/2019/02/11/21/06/college-students-3990783_1280.jpg" className="rounded-xl shadow-md h-40 object-cover" />
+                    <img src="https://cdn.pixabay.com/photo/2019/02/11/21/06/college-students-3990783_1280.jpg" className="rounded-xl shadow-md h-40 object-cover" />
                 </div>
             </section>
 

@@ -1,5 +1,5 @@
 import { ChevronRight, Pencil, Trash2 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 
 const Staff = [
@@ -27,9 +27,31 @@ const Staff = [
         phone: "9123456789",
         email: "amit.verma@example.com",
     },
+    {
+        id: 4,
+        name: "Rahul Sharma",
+        designation: "Staff",
+        department: "Electronics",
+        phone: "9876543210",
+        email: "rahul.sharma@example.com",
+    },
 ];
 
 const ManageStaff = () => {
+    const [searchText, setSearchText] = useState('');
+    const [selectedDesignation, setSelectedDesignation] = useState("All");
+    const [selectedDepartment, setSelectedDepartment] = useState("All");
+
+    // search filter
+    const filteredStaff = Staff.filter((s) => {
+        return (
+            s.name.toLowerCase().includes(searchText.toLowerCase()) &&
+            (selectedDesignation === "All" || s.designation === selectedDesignation) &&
+            (selectedDepartment === "All" || s.department === selectedDepartment)
+        );
+    });
+
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold">Manage Staff</h1>
@@ -47,11 +69,13 @@ const ManageStaff = () => {
                     <input
                         type="text"
                         placeholder="Search by name"
+                        onChange={(e) => setSearchText(e.target.value)}
                         className="border rounded-lg px-4 py-2 w-full focus:outline-none"
                     />
 
                     {/* Designation */}
-                    <select className="border rounded-lg px-4 py-2 w-full focus:outline-none">
+                    <select value={selectedDesignation} onChange={(e) => setSelectedDesignation(e.target.value)}
+                        className="border rounded-lg px-4 py-2 w-full focus:outline-none">
                         <option>All Designations</option>
                         <option>Professor</option>
                         <option>Assistant Professor</option>
@@ -59,7 +83,7 @@ const ManageStaff = () => {
                     </select>
 
                     {/* Subject */}
-                    <select className="border rounded-lg px-4 py-2 w-full focus:outline-none">
+                    <select value={selectedDepartment} onChange={(e) => setSelectedDepartment(e.target.value)} className="border rounded-lg px-4 py-2 w-full focus:outline-none">
                         <option>All Subject</option>
                         <option>Computer Science</option>
                         <option>Electronics</option>
@@ -95,7 +119,7 @@ const ManageStaff = () => {
                     </thead>
 
                     <tbody>
-                        {Staff.map((s) => (
+                        {filteredStaff.map((s) => (
                             <tr key={s.id} className="border-b text-sm">
                                 <td className="p-3">{s.name}</td>
                                 <td className="p-3">{s.designation}</td>
