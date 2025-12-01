@@ -1,6 +1,8 @@
 import { ChevronRight, Pencil, Trash2 } from "lucide-react";
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import AddNewStaffModal from "../../../modals/AddNewStaffModal";
+import EditStaffModal from "../../../modals/EditStaffModal";
 
 const Staff = [
     {
@@ -27,23 +29,18 @@ const Staff = [
         phone: "9123456789",
         email: "amit.verma@example.com",
     },
-    {
-        id: 4,
-        name: "Rahul Sharma",
-        designation: "Staff",
-        department: "Electronics",
-        phone: "9876543210",
-        email: "rahul.sharma@example.com",
-    },
 ];
 
 const ManageStaff = () => {
-    const [searchText, setSearchText] = useState('');
+    const [staffData, setStaffData] = useState(Staff);
+    const [searchText, setSearchText] = useState("");
     const [selectedDesignation, setSelectedDesignation] = useState("All");
     const [selectedDepartment, setSelectedDepartment] = useState("All");
+    const [isAddOpenModal, setIsAddOpenModal] = useState(false);
+    const [isEditOpenModal, setIsEditOpenModal] = useState(false);
+    const [selectedStaff, setSelectedStaff] = useState(null);  // for editStaff modal
 
-    // search filter
-    const filteredStaff = Staff.filter((s) => {
+    const filteredStaff = staffData.filter((s) => {
         return (
             s.name.toLowerCase().includes(searchText.toLowerCase()) &&
             (selectedDesignation === "All" || s.designation === selectedDesignation) &&
@@ -51,60 +48,77 @@ const ManageStaff = () => {
         );
     });
 
+    const handleSaveStaff = (newStaff) => {
+        setStaffData((prev) => [
+            ...prev,
+            { id: prev.length + 1, ...newStaff },
+        ]);
+    };
+
+    const handleUpdateStaff = (updatedStaff) => {
+        setStaffData((prev) =>
+            prev.map((s) => (s.id === updatedStaff.id ? updatedStaff : s))
+        );
+    };
+
+    const handleDeleteStaff = (id) => {
+        window.confirm("Are you sure you want to delete this staff?");
+        setStaffData((prev) => prev.filter((s) => s.id !== id));
+    };
 
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold">Manage Staff</h1>
 
             <p className="flex items-center gap-2 cursor-pointer">
-                <Link to="/adminportal">Home </Link><ChevronRight size={18} /> Manage Staff
+                <Link to="/adminportal">Home</Link>
+                <ChevronRight size={18} /> Manage Staff
             </p>
-            {/* Filters Section */}
+
             <div className="bg-white p-4 mt-4 rounded-2xl shadow-sm">
-
-                {/* GRID FILTERS */}
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-
-                    {/* Search */}
                     <input
                         type="text"
                         placeholder="Search by name"
                         onChange={(e) => setSearchText(e.target.value)}
-                        className="border rounded-lg px-4 py-2 w-full focus:outline-none"
+                        className="border rounded-lg px-4 py-2 w-full"
                     />
 
-                    {/* Designation */}
-                    <select value={selectedDesignation} onChange={(e) => setSelectedDesignation(e.target.value)}
-                        className="border rounded-lg px-4 py-2 w-full focus:outline-none">
-                        <option>All Designations</option>
+                    <select
+                        value={selectedDesignation}
+                        onChange={(e) => setSelectedDesignation(e.target.value)}
+                        className="border rounded-lg px-4 py-2 w-full"
+                    >
+                        <option>All</option>
                         <option>Professor</option>
                         <option>Assistant Professor</option>
                         <option>Staff</option>
                     </select>
 
-                    {/* Subject */}
-                    <select value={selectedDepartment} onChange={(e) => setSelectedDepartment(e.target.value)} className="border rounded-lg px-4 py-2 w-full focus:outline-none">
-                        <option>All Subject</option>
+                    <select
+                        value={selectedDepartment}
+                        onChange={(e) => setSelectedDepartment(e.target.value)}
+                        className="border rounded-lg px-4 py-2 w-full"
+                    >
+                        <option>All</option>
                         <option>Computer Science</option>
                         <option>Electronics</option>
                         <option>Mechanical</option>
                     </select>
                 </div>
 
-                {/* BUTTON OUTSIDE GRID AND RIGHT-ALIGNED */}
                 <div className="flex justify-end mt-4">
-                    <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 duration-200">
+                    <button
+                        onClick={() => setIsAddOpenModal(true)}
+                        className="bg-blue-600 text-white px-5 py-2 rounded-lg"
+                    >
                         + Add New
                     </button>
                 </div>
-
             </div>
 
+            <p className="mt-4 font-semibold">Total : {staffData.length}</p>
 
-            {/* Total Count */}
-            <p className="mt-4 font-semibold">Total : {Staff.length}</p>
-
-            {/* Staff Table */}
             <div className="mt-2 bg-white rounded-2xl shadow-sm overflow-auto">
                 <table className="w-full text-left">
                     <thead className="bg-gray-100">
@@ -126,27 +140,43 @@ const ManageStaff = () => {
                                 <td className="p-3">{s.department}</td>
                                 <td className="p-3">{s.phone}</td>
                                 <td className="p-3">{s.email}</td>
+
                                 <td className="p-3 flex gap-2">
-                                    <div className="flex items-center gap-3">
+                                    <button
+                                        onClick={() => {
+                                            setSelectedStaff(s);
+                                            setIsEditOpenModal(true);
+                                        }}
+                                        className="p-2 bg-yellow-500 text-white rounded-md"
+                                    >
+                                        <Pencil size={16} />
+                                    </button>
 
-                                        {/* Edit Icon */}
-                                        <button className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 duration-200">
-                                            <Pencil size={16} />
-                                        </button>
-
-                                        {/* Delete Icon */}
-                                        <button className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 duration-200">
-                                            <Trash2 size={16} />
-                                        </button>
-
-                                    </div>
-
+                                    <button
+                                        onClick={() => handleDeleteStaff(s.id)}
+                                        className="p-2 bg-red-500 text-white rounded-md"
+                                    >
+                                        <Trash2 size={16} />
+                                    </button>
                                 </td>
                             </tr>
                         ))}
                     </tbody>
                 </table>
             </div>
+
+            <AddNewStaffModal
+                isOpen={isAddOpenModal}
+                onClose={() => setIsAddOpenModal(false)}
+                onSave={handleSaveStaff}
+            />
+
+            <EditStaffModal
+                isOpen={isEditOpenModal}
+                onClose={() => setIsEditOpenModal(false)}
+                staff={selectedStaff}
+                onSave={handleUpdateStaff}
+            />
         </div>
     );
 };
