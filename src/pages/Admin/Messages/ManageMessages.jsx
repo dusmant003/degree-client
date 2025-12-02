@@ -1,58 +1,88 @@
 import { ChevronRight, Pencil, Trash2 } from "lucide-react";
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
+import AddNewMessageModal from "../../../modals/AddNewMessageModal";
+import EditMessageModal from "../../../modals/EditMessageModal";
+import { toast } from "react-toastify";
+import ConfirmDeleteMessage from "../../../modals/ConfirmDeleteMessage";
 
-const Staff = [
+const Messages = [
     {
         id: 1,
         name: "Rahul Sharma",
         email: "rahul.sharma@example.com",
-        message: "Professor",
-        date: "Computer Science",
+        message: "I want to know about admission process.",
+        date: "02 Dec 2025",
     },
     {
         id: 2,
-        name: "Rahul Sharma",
-        email: "rahul.sharma@example.com",
-        message: "Professor",
-        date: "Computer Science",
+        name: "Priya Verma",
+        email: "priya.verma@example.com",
+        message: "Need information about fee structure.",
+        date: "02 Dec 2025",
     },
     {
         id: 3,
-        name: "Rahul Sharma",
-        email: "rahul.sharma@example.com",
-        message: "Professor",
-        date: "Computer Science",
+        name: "Amit Gupta",
+        email: "amit.gupta@example.com",
+        message: "Campus tour details please.",
+        date: "02 Dec 2025",
     },
     {
         id: 4,
-        name: "Rahul Sharma",
-        email: "rahul.sharma@example.com",
-        message: "Professor",
-        date: "Computer Science",
+        name: "Sneha Rao",
+        email: "sneha.rao@example.com",
+        message: "Library timings inquiry.",
+        date: "02 Dec 2025",
     }
 ];
 
-const ManageMesseges = () => {
+const ManageMessages = () => {
+    const [message, setMessage] = useState(Messages);
+    const [searchMessage, setSearchMessage] = useState('');
+    const [isAddOpenModal, setIsAddOpenModal] = useState(false);
+    const [isEditOpenModal, setIsEditOpenModal] = useState(false);
+    const [selectedMessage, setSelectedMessage] = useState(null);
+
+    // search filter
+    const filteredMessages = message.filter((msg) => {
+        return msg.name.toLowerCase().includes(searchMessage.toLowerCase());
+    });
+
+    const handleDeleteMessage = (id) => {
+        setMessage((prev) => prev.filter((s) => s.id !== id));
+        toast.success("Message deleted successfully!");
+    };
+
     return (
         <div className="p-6">
             <h1 className="text-2xl font-bold">Manage Messages</h1>
 
             <p className="flex items-center gap-2 cursor-pointer">
-                <Link to="/adminportal">Home </Link><ChevronRight size={18} /> Manage Messages
+                <Link to="/adminportal">Home</Link>
+                <ChevronRight size={18} /> Manage Messages
             </p>
+            {/* add+search */}
+            <div className="bg-white p-4 mt-4 rounded-2xl shadow-sm">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+                    <input
+                        type="text"
+                        placeholder="Search by Name"
+                        value={searchMessage}
+                        onChange={(e) => setSearchMessage(e.target.value)}
+                        className="focus:outline-none border p-2 rounded-md w-full lg:w-auto"
+                    />
 
-            {/* Add New Button */}
-            <div className="p-4 mt-4">
-                <div className="flex justify-end mt-4">
-                    <button className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 duration-200">
+                    <button
+                        onClick={() => setIsAddOpenModal(true)}
+                        className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 duration-200"
+                    >
                         + Add New
                     </button>
                 </div>
             </div>
-
             {/* Total Count */}
-            <p className="mt-4 font-semibold">Total : {Staff.length}</p>
+            <p className="mt-4 font-semibold">Total : {filteredMessages.length}</p>
 
             {/* Table */}
             <div className="mt-2 bg-white rounded-2xl shadow-sm overflow-auto">
@@ -69,24 +99,34 @@ const ManageMesseges = () => {
                     </thead>
 
                     <tbody>
-                        {Staff.map((s) => (
-                            <tr key={s.id} className="border-b text-sm">
-                                <td className="p-3">{s.id}</td>
-                                <td className="p-3">{s.name}</td>
-                                <td className="p-3">{s.email}</td>
-                                <td className="p-3">{s.message}</td>
-                                <td className="p-3">{s.date}</td>
+                        {filteredMessages.map((msg) => (
+                            <tr key={msg.id} className="border-b text-sm">
+                                <td className="p-3">{msg.id}</td>
+                                <td className="p-3">{msg.name}</td>
+                                <td className="p-3">{msg.email}</td>
+                                <td className="p-3 max-w-[250px]">{msg.message}</td>
+                                <td className="p-3">{msg.date}</td>
 
-                                <td className="p-3 flex gap-2">
+                                <td className="p-3">
                                     <div className="flex items-center gap-3">
 
                                         {/* Edit Icon */}
-                                        <button className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 duration-200">
+                                        <button onClick={() => setIsEditOpenModal(true)} className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 duration-200">
                                             <Pencil size={16} />
                                         </button>
 
                                         {/* Delete Icon */}
-                                        <button className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 duration-200">
+                                        <button
+                                            onClick={() =>
+                                                toast.info(
+                                                    <ConfirmDeleteMessage
+                                                        message="Are you sure you want to delete this event?"
+                                                        onConfirm={() => handleDeleteMessage(msg.id)}
+                                                    />,
+                                                    { autoClose: false }
+                                                )
+                                            }
+                                            className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 duration-200">
                                             <Trash2 size={16} />
                                         </button>
 
@@ -97,8 +137,11 @@ const ManageMesseges = () => {
                     </tbody>
                 </table>
             </div>
+            {/* addnewmessage modal */}
+            <AddNewMessageModal isOpen={isAddOpenModal} onClose={() => setIsAddOpenModal(false)} />
+            <EditMessageModal isOpen={isEditOpenModal} onClose={() => setIsEditOpenModal(false)} />
         </div>
     );
 };
 
-export default ManageMesseges;
+export default ManageMessages;
