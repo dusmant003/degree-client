@@ -1,8 +1,10 @@
 import { ChevronRight, Pencil, Trash2 } from "lucide-react";
 import React, { useState } from "react";
+import { toast } from "react-toastify";
 import { Link } from "react-router-dom";
 import AddNewStaffModal from "../../../modals/AddNewStaffModal";
 import EditStaffModal from "../../../modals/EditStaffModal";
+import ConfirmDeleteStaff from "../../../modals/ConfirmDeleteStaff";
 
 const Staff = [
     {
@@ -62,8 +64,8 @@ const ManageStaff = () => {
     };
 
     const handleDeleteStaff = (id) => {
-        window.confirm("Are you sure you want to delete this staff?");
         setStaffData((prev) => prev.filter((s) => s.id !== id));
+        toast.success("Event deleted successfully!");
     };
 
     return (
@@ -80,6 +82,7 @@ const ManageStaff = () => {
                     <input
                         type="text"
                         placeholder="Search by name"
+                        value={searchText}
                         onChange={(e) => setSearchText(e.target.value)}
                         className="border rounded-lg px-4 py-2 w-full"
                     />
@@ -153,7 +156,15 @@ const ManageStaff = () => {
                                     </button>
 
                                     <button
-                                        onClick={() => handleDeleteStaff(s.id)}
+                                        onClick={() =>
+                                            toast.info(
+                                                <ConfirmDeleteStaff
+                                                    message="Are you sure you want to delete this Staff?"
+                                                    onConfirm={() => handleDeleteStaff(s.id)}
+                                                />,
+                                                { autoClose: false }
+                                            )
+                                        }
                                         className="p-2 bg-red-500 text-white rounded-md"
                                     >
                                         <Trash2 size={16} />
