@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, Pencil, Trash2 } from "lucide-react";
+import AddNewNewsModal from "../../../modals/AddNewNewsModal";
 
 const sampleNews = [
     {
@@ -20,6 +21,20 @@ const sampleNews = [
 ];
 
 export default function ManageNotifications() {
+    const [news, setNews] = useState(sampleNews);
+    const [searchTitle, setSearchTitle] = useState("");
+    const [isAddOpenModal, setIsAddOpenModal] = useState(false);
+    // search filter
+    const filteredNews = news.filter((not) => {
+        return not.title.toLocaleLowerCase().includes(searchTitle.toLocaleLowerCase());
+    })
+
+    const handleSaveNews = (newNews) => {
+        setNews((prev) => [
+            ...prev,
+            { id: prev.length + 1, ...newNews },
+        ]);
+    };
     return (
         <div className="p-6">
             {/* Page Title */}
@@ -32,15 +47,27 @@ export default function ManageNotifications() {
                 News & Notifications
             </p>
 
-            {/* Top bar + Add Button */}
-            <div className="flex justify-end mt-6">
-                <button className="bg-blue-600 px-5 py-2 rounded-lg text-white hover:bg-blue-700 duration-200">
-                    + Add News
-                </button>
-            </div>
+            {/* add+search */}
+            <div className="bg-white p-4 mt-4 rounded-2xl shadow-sm">
+                <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
+                    <input
+                        type="text"
+                        value={searchTitle}
+                        onChange={(e) => setSearchTitle(e.target.value)}
+                        placeholder="Search by Title"
+                        className="focus:outline-none border p-2 rounded-md w-full lg:w-auto"
+                    />
 
+                    <button
+                        onClick={() => setIsAddOpenModal(true)}
+                        className="flex items-center gap-2 bg-blue-600 text-white px-5 py-2 rounded-lg hover:bg-blue-700 duration-200"
+                    >
+                        + Add New
+                    </button>
+                </div>
+            </div>
             {/* Total Count */}
-            <p className="mt-4 font-semibold">Total : {sampleNews.length}</p>
+            <p className="mt-4 font-semibold">Total : {filteredNews.length}</p>
 
             {/* Table */}
             <div className="mt-3 bg-white rounded-2xl shadow-md overflow-auto">
@@ -57,7 +84,7 @@ export default function ManageNotifications() {
                     </thead>
 
                     <tbody>
-                        {sampleNews.map((news) => (
+                        {filteredNews.map((news) => (
                             <tr key={news.id} className="border-b text-sm hover:bg-gray-50">
                                 <td className="p-3">{news.id}</td>
                                 <td className="p-3">{news.title}</td>
@@ -84,6 +111,8 @@ export default function ManageNotifications() {
                     </tbody>
                 </table>
             </div>
+            {/* addnewnews modal */}
+            <AddNewNewsModal isOpen={isAddOpenModal} onClose={() => setIsAddOpenModal(false)} onSave={handleSaveNews} />
         </div>
     );
 }
