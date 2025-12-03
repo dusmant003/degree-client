@@ -49,6 +49,14 @@ const ManageMessages = () => {
         return msg.name.toLowerCase().includes(searchMessage.toLowerCase());
     });
 
+    const handleAddMessage = (newMessage) => {
+        setMessage((prev) => [
+            ...prev,
+             { id: prev.length + 1, ...newMessage }
+        ]);
+    };
+
+
     const handleDeleteMessage = (id) => {
         setMessage((prev) => prev.filter((s) => s.id !== id));
         toast.success("Message deleted successfully!");
@@ -138,7 +146,7 @@ const ManageMessages = () => {
                 </table>
             </div>
             {/* addnewmessage modal */}
-            <AddNewMessageModal isOpen={isAddOpenModal} onClose={() => setIsAddOpenModal(false)} />
+            <AddNewMessageModal isOpen={isAddOpenModal} onClose={() => setIsAddOpenModal(false)} onSave={handleAddMessage} />
             <EditMessageModal isOpen={isEditOpenModal} onClose={() => setIsEditOpenModal(false)} />
         </div>
     );
