@@ -2,6 +2,9 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { ChevronRight, Pencil, Trash2 } from "lucide-react";
 import AddNewNewsModal from "../../../modals/AddNewNewsModal";
+import EditNewsModal from "../../../modals/EditNewsModal";
+import ConfirmDeleteNews from "../../../modals/ConfirmDeleteNews";
+import { toast } from "react-toastify";
 
 const sampleNews = [
     {
@@ -24,20 +27,41 @@ export default function ManageNotifications() {
     const [news, setNews] = useState(sampleNews);
     const [searchTitle, setSearchTitle] = useState("");
     const [isAddOpenModal, setIsAddOpenModal] = useState(false);
-    // search filter
-    const filteredNews = news.filter((not) => {
-        return not.title.toLocaleLowerCase().includes(searchTitle.toLocaleLowerCase());
-    })
+    const [isEditOpenModal, setIsEditOpenModal] = useState(false);
+    const [selectedNews, setSelectedNews] = useState(null);
 
+    // Search Filter
+    const filteredNews = news.filter((item) =>
+        item.title.toLowerCase().includes(searchTitle.toLowerCase())
+    );
+
+    // Add News
     const handleSaveNews = (newNews) => {
-        setNews((prev) => [
-            ...prev,
-            { id: prev.length + 1, ...newNews },
-        ]);
+        setNews((prev) => [...prev, { id: prev.length + 1, ...newNews }]);
+        setIsAddOpenModal(false); // close modal
     };
+
+    // Open Edit Modal
+    const handleEdit = (item) => {
+        setSelectedNews(item);
+        setIsEditOpenModal(true);
+    };
+
+    // Update News
+    const handleUpdateNews = (updatedNews) => {
+        setNews((prev) =>
+            prev.map((n) => (n.id === updatedNews.id ? updatedNews : n))
+        );
+        setIsEditOpenModal(false); // close modal after update
+    };
+
+    // delete news
+    const handleDeleteNews = (id) => {
+        setNews((prev) => prev.filter((n) => n.id !== id))
+    }
+
     return (
         <div className="p-6">
-            {/* Page Title */}
             <h1 className="text-2xl font-bold">News & Notifications</h1>
 
             {/* Breadcrumb */}
@@ -47,7 +71,7 @@ export default function ManageNotifications() {
                 News & Notifications
             </p>
 
-            {/* add+search */}
+            {/* Search + Add Button */}
             <div className="bg-white p-4 mt-4 rounded-2xl shadow-sm">
                 <div className="flex flex-col lg:flex-row items-center justify-between gap-4">
                     <input
@@ -66,6 +90,7 @@ export default function ManageNotifications() {
                     </button>
                 </div>
             </div>
+
             {/* Total Count */}
             <p className="mt-4 font-semibold">Total : {filteredNews.length}</p>
 
@@ -84,24 +109,38 @@ export default function ManageNotifications() {
                     </thead>
 
                     <tbody>
-                        {filteredNews.map((news) => (
-                            <tr key={news.id} className="border-b text-sm hover:bg-gray-50">
-                                <td className="p-3">{news.id}</td>
-                                <td className="p-3">{news.title}</td>
-                                <td className="p-3">{news.description}</td>
-                                <td className="p-3">{news.date}</td>
-                                <td className="p-3">{news.time}</td>
+                        {filteredNews.map((item) => (
+                            <tr key={item.id} className="border-b text-sm hover:bg-gray-50">
+                                <td className="p-3">{item.id}</td>
+                                <td className="p-3">{item.title}</td>
+                                <td className="p-3">{item.description}</td>
+                                <td className="p-3">{item.date}</td>
+                                <td className="p-3">{item.time}</td>
 
                                 <td className="p-3">
                                     <div className="flex justify-center gap-3">
 
-                                        {/* Edit Button */}
-                                        <button className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600">
+                                        {/* Edit */}
+                                        <button
+                                            onClick={() => handleEdit(item)}
+                                            className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600"
+                                        >
                                             <Pencil size={16} />
                                         </button>
 
-                                        {/* Delete Button */}
-                                        <button className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600">
+                                        {/* DELETE */}
+                                        <button
+                                            onClick={() =>
+                                                toast.info(
+                                                    <ConfirmDeleteNews
+                                                        message="Are you sure you want to delete this event?"
+                                                        onConfirm={() => handleDeleteNews(item.id)}
+                                                    />,
+                                                    { autoClose: false }
+                                                )
+                                            }
+                                            className="p-2 bg-red-500 text-white rounded-md hover:bg-red-600 duration-200"
+                                        >
                                             <Trash2 size={16} />
                                         </button>
                                     </div>
@@ -111,8 +150,21 @@ export default function ManageNotifications() {
                     </tbody>
                 </table>
             </div>
-            {/* addnewnews modal */}
-            <AddNewNewsModal isOpen={isAddOpenModal} onClose={() => setIsAddOpenModal(false)} onSave={handleSaveNews} />
+
+            {/* ADD MODAL */}
+            <AddNewNewsModal
+                isOpen={isAddOpenModal}
+                onClose={() => setIsAddOpenModal(false)}
+                onSave={handleSaveNews}
+            />
+
+            {/* EDIT MODAL */}
+            <EditNewsModal
+                isOpen={isEditOpenModal}
+                onClose={() => setIsEditOpenModal(false)}
+                news={selectedNews}
+                onSave={handleUpdateNews}
+            />
         </div>
     );
 }
