@@ -52,10 +52,23 @@ const ManageMessages = () => {
     const handleAddMessage = (newMessage) => {
         setMessage((prev) => [
             ...prev,
-             { id: prev.length + 1, ...newMessage }
+            { id: prev.length + 1, ...newMessage }
         ]);
     };
 
+    // edit message
+    const handleEditMessage = (message) => {
+        setSelectedMessage(message);
+        setIsEditOpenModal(true);
+    }
+
+    // update message
+    const handleUpdateMessage = (updatedMessage) => {
+
+        setMessage((prev) => {
+            return prev.map((s) => s.id === updatedMessage.id ? updatedMessage : s)
+        })
+    }
 
     const handleDeleteMessage = (id) => {
         setMessage((prev) => prev.filter((s) => s.id !== id));
@@ -119,7 +132,7 @@ const ManageMessages = () => {
                                     <div className="flex items-center gap-3">
 
                                         {/* Edit Icon */}
-                                        <button onClick={() => setIsEditOpenModal(true)} className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 duration-200">
+                                        <button onClick={() => handleEditMessage(msg)} className="p-2 bg-yellow-500 text-white rounded-md hover:bg-yellow-600 duration-200">
                                             <Pencil size={16} />
                                         </button>
 
@@ -147,7 +160,7 @@ const ManageMessages = () => {
             </div>
             {/* addnewmessage modal */}
             <AddNewMessageModal isOpen={isAddOpenModal} onClose={() => setIsAddOpenModal(false)} onSave={handleAddMessage} />
-            <EditMessageModal isOpen={isEditOpenModal} onClose={() => setIsEditOpenModal(false)} />
+            <EditMessageModal isOpen={isEditOpenModal} onClose={() => setIsEditOpenModal(false)} msg={selectedMessage} onSave={handleUpdateMessage} />
         </div>
     );
 };

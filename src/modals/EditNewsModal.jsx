@@ -24,7 +24,7 @@ const EditNewsModal = ({ isOpen, onClose, news, onSave }) => {
             toast.error("All fields are required");
             return;
         }
-        const updatedNews ={
+        const updatedNews = {
             id: news.id,
             title,
             description,
