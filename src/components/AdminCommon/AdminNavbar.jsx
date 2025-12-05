@@ -40,12 +40,12 @@ const AdminNavbar = () => {
           </button>
           <div className="flex items-center gap-2">
             <img
-              src="/src/assets/logo.png"
+              src="https://cdn.pixabay.com/photo/2021/06/25/13/22/girl-6363743_1280.jpg"
               alt="Admin"
               className="w-8 h-8 rounded-full border"
             />
             <span className="hidden md:block text-sm font-medium text-gray-700">
-              Admin
+              Barsha Meher
             </span>
           </div>
         </div>

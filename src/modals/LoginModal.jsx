@@ -30,6 +30,7 @@ export default function LoginModal({ isOpen, onClose }) {
             setPassword("");
 
             onClose();
+            window.open('/adminportal', '_blank');
         }, 1000);
     };
 

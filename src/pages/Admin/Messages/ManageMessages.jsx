@@ -11,6 +11,7 @@ const Messages = [
         id: 1,
         name: "Rahul Sharma",
         email: "rahul.sharma@example.com",
+        mobile: "9876543210",
         message: "I want to know about admission process.",
         date: "02 Dec 2025",
     },
@@ -18,6 +19,7 @@ const Messages = [
         id: 2,
         name: "Priya Verma",
         email: "priya.verma@example.com",
+        mobile: "9876543210",
         message: "Need information about fee structure.",
         date: "02 Dec 2025",
     },
@@ -25,6 +27,7 @@ const Messages = [
         id: 3,
         name: "Amit Gupta",
         email: "amit.gupta@example.com",
+        mobile: "9876543210",
         message: "Campus tour details please.",
         date: "02 Dec 2025",
     },
@@ -32,6 +35,7 @@ const Messages = [
         id: 4,
         name: "Sneha Rao",
         email: "sneha.rao@example.com",
+        mobile: "9876543210",
         message: "Library timings inquiry.",
         date: "02 Dec 2025",
     }
@@ -113,6 +117,7 @@ const ManageMessages = () => {
                             <th className="p-3 font-semibold">ID</th>
                             <th className="p-3 font-semibold">Name</th>
                             <th className="p-3 font-semibold">Email</th>
+                            <th className="p-3 font-semibold">Mobile</th>
                             <th className="p-3 font-semibold">Message</th>
                             <th className="p-3 font-semibold">Date</th>
                             <th className="p-3 font-semibold">Actions</th>
@@ -125,6 +130,7 @@ const ManageMessages = () => {
                                 <td className="p-3">{msg.id}</td>
                                 <td className="p-3">{msg.name}</td>
                                 <td className="p-3">{msg.email}</td>
+                                <td className="p-3">{msg.mobile}</td>
                                 <td className="p-3 max-w-[250px]">{msg.message}</td>
                                 <td className="p-3">{msg.date}</td>
 

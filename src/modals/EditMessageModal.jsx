@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 const EditMessageModal = ({ isOpen, onClose, msg, onSave }) => {
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [mobile, setMobile] = useState("");
     const [message, setMessage] = useState("");
     const [date, setDate] = useState("");
 
@@ -11,6 +12,7 @@ const EditMessageModal = ({ isOpen, onClose, msg, onSave }) => {
         if (msg) {
             setName(msg.name);
             setEmail(msg.email);
+            setMobile(msg.mobile);
             setMessage(msg.message);
             setDate(msg.date);
         }
@@ -19,11 +21,11 @@ const EditMessageModal = ({ isOpen, onClose, msg, onSave }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!name || !email || !message || !date) {
+        if (!name || !email || !mobile || !message || !date) {
             toast.error("all fields are required");
             return;
         }
-        const newMessage = { id: msg.id, name, email, message, date };
+        const newMessage = { id: msg.id, name, email, mobile, message, date };
         onSave(newMessage);
         toast.success("message added successfully !");
         onClose();
@@ -39,6 +41,7 @@ const EditMessageModal = ({ isOpen, onClose, msg, onSave }) => {
                     <div className='grid gap-3'>
                         <input value={name} onChange={(e) => setName(e.target.value)} type="text" placeholder='Name' className='p-2 rounded-md focus:outline-none border' />
                         <input value={email} onChange={(e) => setEmail(e.target.value)} type="email" placeholder='Enter Email' className='p-2 rounded-md focus:outline-none border' />
+                        <input value={mobile} onChange={(e) => setMobile(e.target.value)} type="number" placeholder='Enter Number' className='p-2 rounded-md focus:outline-none border' />
                         <textarea
                             value={message}
                             onChange={(e) => setMessage(e.target.value)}

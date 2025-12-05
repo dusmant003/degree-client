@@ -5,23 +5,25 @@ const AddNewMessageModal = ({ isOpen, onClose, onSave }) => {
     if (!isOpen) return null;
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [mobile, setMobile] = useState("");
     const [message, setMessage] = useState("");
     const [date, setDate] = useState("");
 
     const resetFields = () => {
         setName("")
         setEmail("")
+        setMobile("")
         setMessage("")
         setDate("")
     }
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        if (!name || !email || !message || !date) {
+        if (!name || !email || !mobile || !message || !date) {
             toast.error("all fields are required");
             return;
         }
-        const newMessage = { name, email, message, date };
+        const newMessage = { name, email, mobile, message, date };
         console.log(newMessage)
         onSave(newMessage);
         toast.success("message added successfully !");
@@ -43,6 +45,10 @@ const AddNewMessageModal = ({ isOpen, onClose, onSave }) => {
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
                             type="email" placeholder='Enter Email' className='p-2 rounded-md focus:outline-none border' />
+                        <input
+                            value={mobile}
+                            onChange={(e) => setMobile(e.target.value)}
+                            type="number" placeholder='Enter Number' className='p-2 rounded-md focus:outline-none border' />
 
                         <textarea
                             value={message}

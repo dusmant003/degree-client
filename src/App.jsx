@@ -18,6 +18,7 @@ import NewsAndNotification from './pages/NewsAndNotifications/NewsAndNotificatio
 import FresherDay from './pages/Fresher/FresherDay'
 import WelComeDay from './pages/Welcome/WelComeDay'
 import AnnualDay from './pages/Annual/AnnualDay'
+import Help from './pages/Admin/Help/Help'
 
 
 const App = () => {
@@ -47,6 +48,7 @@ const App = () => {
           <Route path='manage/notifications' element={<ManageNotifications />} />
           <Route path='manage/messages' element={<ManageMessages />} />
           <Route path='settings/profile' element={<Profile />} />
+          <Route path='help/help' element={<Help />} />
         </Route>
       </Routes>
     </>

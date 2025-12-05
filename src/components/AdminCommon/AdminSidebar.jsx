@@ -9,7 +9,8 @@ import {
     Settings,
     ChevronRight,
     ChevronDown,
-    Inbox
+    Inbox,
+    HelpCircle
 } from "lucide-react";
 
 const AdminSidebar = () => {
@@ -62,6 +63,13 @@ const AdminSidebar = () => {
             icon: Settings,
             children: [
                 { name: "Profile", path: "settings/profile" },
+            ],
+        },
+        {
+            title: "Help",
+            icon: HelpCircle,
+            children: [
+                { name: "Help & Support", path: "help/help" },
             ],
         },
     ];
@@ -128,8 +136,8 @@ const AdminSidebar = () => {
                                                     key={idx}
                                                     to={child.path}
                                                     className={`block p-2 rounded-lg text-sm hover:bg-gray-800 ${location.pathname === child.path
-                                                            ? "bg-gray-800 text-white"
-                                                            : "text-gray-300"
+                                                        ? "bg-gray-800 text-white"
+                                                        : "text-gray-300"
                                                         }`}
                                                 >
                                                     {child.name}
